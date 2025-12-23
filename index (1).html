@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>信息素味道测试</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sweet: #E8A0BF;
+            --cool: #7EB5D6;
+            --lively: #FFB347;
+            --rich: #A67B5B;
+            --light: #B8C9A3;
+            --bg-gradient: linear-gradient(135deg, #FDF6F0 0%, #F5EBE6 50%, #EDE4DF 100%);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            color: #4A4A4A;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            height: -webkit-fill-available;
+        }
+
+        /* 开始页面 */
+        .start-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 14px;
+            letter-spacing: 8px;
+            color: #999;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .main-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(32px, 8vw, 56px);
+            font-weight: 600;
+            background: linear-gradient(135deg, #E8A0BF 0%, #7EB5D6 50%, #B8C9A3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .description {
+            max-width: 500px;
+            line-height: 2;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 15px;
+        }
+
+        .start-btn {
+            padding: 18px 60px;
+            font-size: 16px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #E8A0BF 0%, #D4919B 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(232, 160, 191, 0.3);
+            letter-spacing: 3px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(232, 160, 191, 0.4);
+        }
+
+        /* 测试页面 */
+        .test-page {
+            display: none;
+            min-height: 100vh;
+            padding: 30px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(0,0,0,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E8A0BF, #7EB5D6, #B8C9A3);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .question-container {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-number {
+            font-size: 13px;
+            color: #BBB;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .question-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(20px, 5vw, 26px);
+            font-weight: 600;
+            color: #3A3A3A;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option {
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.7);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .option:hover {
+            background: rgba(255,255,255,0.95);
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .option.selected {
+            border-color: #E8A0BF;
+            background: rgba(232, 160, 191, 0.1);
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            padding: 14px 35px;
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .prev-btn {
+            background: transparent;
+            color: #999;
+            border: 1px solid #DDD;
+        }
+
+        .prev-btn:hover {
+            border-color: #BBB;
+            color: #666;
+        }
+
+        .prev-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #E8A0BF 0%, #D4919B 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(232, 160, 191, 0.3);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(232, 160, 191, 0.4);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 结果页面 */
+        .result-page {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .result-label {
+            font-size: 13px;
+            letter-spacing: 5px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .result-type {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(36px, 10vw, 60px);
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .result-type.sweet { color: #E8A0BF; }
+        .result-type.cool { color: #7EB5D6; }
+        .result-type.lively { color: #FFB347; }
+        .result-type.rich { color: #A67B5B; }
+        .result-type.light { color: #8BA87E; }
+
+        .result-scent {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+        }
+
+        .result-card {
+            max-width: 550px;
+            margin: 0 auto 40px;
+            padding: 40px 35px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .result-section {
+            margin-bottom: 30px;
+        }
+
+        .result-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-section-title {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #AAA;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .result-section-content {
+            font-size: 15px;
+            line-height: 2;
+            color: #555;
+        }
+
+        .score-chart {
+            max-width: 550px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 20px;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .score-item:hover {
+            background: rgba(255,255,255,0.6);
+            transform: translateX(5px);
+        }
+
+        .score-item.active {
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .score-item:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .score-hint {
+            text-align: center;
+            font-size: 11px;
+            color: #BBB;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .score-label {
+            width: 70px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .score-bar-bg {
+            flex: 1;
+            height: 8px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .score-bar-fill.sweet { background: #E8A0BF; }
+        .score-bar-fill.cool { background: #7EB5D6; }
+        .score-bar-fill.lively { background: #FFB347; }
+        .score-bar-fill.rich { background: #A67B5B; }
+        .score-bar-fill.light { background: #8BA87E; }
+
+        .score-value {
+            width: 45px;
+            font-size: 13px;
+            color: #999;
+            text-align: right;
+        }
+
+        .restart-btn {
+            padding: 16px 50px;
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent;
+            color: #999;
+            border: 1px solid #DDD;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .restart-btn:hover {
+            border-color: #BBB;
+            color: #666;
+        }
+
+        /* 香水推荐区域 */
+        .perfume-card {
+            max-width: 550px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+        }
+
+        .perfume-title {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #AAA;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .perfume-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .perfume-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .perfume-item:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateX(5px);
+        }
+
+        .perfume-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            background: linear-gradient(135deg, #F5EBE6 0%, #E8DDD6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .perfume-info {
+            flex: 1;
+        }
+
+        .perfume-brand {
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .perfume-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4A4A4A;
+            margin-bottom: 6px;
+        }
+
+        .perfume-note {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 600px) {
+            body {
+                font-size: 15px;
+            }
+
+            .start-page {
+                padding: 30px 20px;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+
+            .logo {
+                font-size: 12px;
+                letter-spacing: 5px;
+                margin-bottom: 30px;
+            }
+
+            .main-title {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 35px;
+            }
+
+            .description {
+                font-size: 14px;
+                line-height: 1.9;
+                margin-bottom: 40px;
+                padding: 0 10px;
+            }
+
+            .start-btn {
+                padding: 16px 50px;
+                font-size: 15px;
+                width: 80%;
+                max-width: 280px;
+            }
+
+            .test-page {
+                padding: 20px 16px;
+            }
+
+            .progress-container {
+                margin-bottom: 30px;
+            }
+
+            .question-number {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .question-text {
+                font-size: 18px;
+                margin-bottom: 30px;
+                line-height: 1.7;
+            }
+
+            .options {
+                gap: 12px;
+            }
+
+            .option {
+                padding: 16px 18px;
+                font-size: 14px;
+                line-height: 1.7;
+                border-radius: 14px;
+            }
+
+            .option:hover {
+                transform: none;
+            }
+
+            .option:active {
+                background: rgba(255,255,255,0.95);
+                transform: scale(0.98);
+            }
+
+            .option-label {
+                font-size: 14px;
+            }
+
+            .nav-buttons {
+                margin-top: 35px;
+                gap: 15px;
+            }
+
+            .nav-btn {
+                padding: 14px 30px;
+                font-size: 14px;
+                flex: 1;
+            }
+
+            .result-page {
+                padding: 40px 16px;
+            }
+
+            .result-label {
+                font-size: 11px;
+                letter-spacing: 4px;
+            }
+
+            .result-type {
+                font-size: 32px;
+            }
+
+            .result-scent {
+                font-size: 14px;
+                margin-bottom: 35px;
+            }
+
+            .result-card {
+                padding: 25px 20px;
+                margin-bottom: 25px;
+                border-radius: 20px;
+            }
+
+            .result-section {
+                margin-bottom: 22px;
+            }
+
+            .result-section-title {
+                font-size: 11px;
+                margin-bottom: 10px;
+            }
+
+            .result-section-content {
+                font-size: 14px;
+                line-height: 1.9;
+            }
+
+            .perfume-card {
+                padding: 25px 18px;
+                margin-bottom: 25px;
+                border-radius: 18px;
+            }
+
+            .perfume-title {
+                font-size: 11px;
+                margin-bottom: 18px;
+            }
+
+            .perfume-list {
+                gap: 12px;
+            }
+
+            .perfume-item {
+                padding: 14px;
+                border-radius: 10px;
+            }
+
+            .perfume-item:hover {
+                transform: none;
+            }
+
+            .perfume-item:active {
+                background: rgba(255,255,255,0.9);
+            }
+
+            .perfume-icon {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                font-size: 16px;
+                margin-right: 12px;
+            }
+
+            .perfume-brand {
+                font-size: 10px;
+            }
+
+            .perfume-name {
+                font-size: 13px;
+                margin-bottom: 5px;
+            }
+
+            .perfume-note {
+                font-size: 11px;
+            }
+
+            .score-chart {
+                padding: 22px 16px;
+                margin-bottom: 25px;
+                border-radius: 18px;
+            }
+
+            .score-item {
+                padding: 10px;
+                margin-bottom: 12px;
+                border-radius: 10px;
+            }
+
+            .score-item:hover {
+                transform: none;
+            }
+
+            .score-item:active {
+                background: rgba(255,255,255,0.7);
+            }
+
+            .score-label {
+                width: 60px;
+                font-size: 12px;
+            }
+
+            .score-bar-bg {
+                height: 10px;
+                border-radius: 5px;
+            }
+
+            .score-bar-fill {
+                border-radius: 5px;
+            }
+
+            .score-value {
+                width: 35px;
+                font-size: 12px;
+            }
+
+            .score-hint {
+                font-size: 10px;
+                margin-top: 12px;
+            }
+
+            .restart-btn {
+                padding: 14px 40px;
+                font-size: 13px;
+                width: 70%;
+                max-width: 250px;
+            }
+        }
+
+        /* 超小屏幕适配 */
+        @media (max-width: 380px) {
+            .main-title {
+                font-size: 24px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .option {
+                padding: 14px 16px;
+                font-size: 13px;
+            }
+
+            .result-type {
+                font-size: 28px;
+            }
+
+            .score-label {
+                width: 55px;
+                font-size: 11px;
+            }
+        }
+
+        /* 触摸设备优化 */
+        @media (hover: none) and (pointer: coarse) {
+            .option:hover,
+            .perfume-item:hover,
+            .score-item:hover {
+                transform: none;
+                background: inherit;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 开始页面 -->
+    <div class="start-page" id="startPage">
+        <div class="logo">Pheromone Test</div>
+        <h1 class="main-title">信息素味道测试</h1>
+        <p class="subtitle">探索属于你的专属气息</p>
+        <p class="description">
+            每个人都有独特的气质，就像无形的信息素，<br>
+            在不经意间散发着吸引力。<br><br>
+            25道题，找到属于你的味道。
+        </p>
+        <button class="start-btn" onclick="startTest()">开始测试</button>
+    </div>
+
+    <!-- 测试页面 -->
+    <div class="test-page" id="testPage">
+        <div class="progress-container">
+            <div class="progress-text">
+                <span id="progressLabel">问题 1 / 25</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="question-number" id="questionNumber">QUESTION 01</div>
+            <div class="question-text" id="questionText"></div>
+            <div class="options" id="optionsContainer"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn prev-btn" id="prevBtn" onclick="prevQuestion()" disabled>上一题</button>
+            <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+        </div>
+    </div>
+
+    <!-- 结果页面 -->
+    <div class="result-page" id="resultPage">
+        <div class="result-label">YOUR PHEROMONE</div>
+        <h2 class="result-type" id="resultType"></h2>
+        <p class="result-scent" id="resultScent"></p>
+        
+        <div class="result-card">
+            <div class="result-section">
+                <div class="result-section-title">人格特质</div>
+                <div class="result-section-content" id="resultTraits"></div>
+            </div>
+            <div class="result-section">
+                <div class="result-section-title">气息描述</div>
+                <div class="result-section-content" id="resultDesc"></div>
+            </div>
+            <div class="result-section">
+                <div class="result-section-title">你的魅力</div>
+                <div class="result-section-content" id="resultCharm"></div>
+            </div>
+        </div>
+
+        <div class="perfume-card">
+            <div class="perfume-title" id="perfumeTitle">推荐香水</div>
+            <div class="perfume-list" id="perfumeList"></div>
+        </div>
+
+        <div class="score-chart">
+            <div class="score-item" onclick="showPerfumeByType('sweet')">
+                <span class="score-label">甜润调</span>
+                <div class="score-bar-bg"><div class="score-bar-fill sweet" id="sweetBar"></div></div>
+                <span class="score-value" id="sweetScore">0</span>
+            </div>
+            <div class="score-item" onclick="showPerfumeByType('cool')">
+                <span class="score-label">清冽调</span>
+                <div class="score-bar-bg"><div class="score-bar-fill cool" id="coolBar"></div></div>
+                <span class="score-value" id="coolScore">0</span>
+            </div>
+            <div class="score-item" onclick="showPerfumeByType('lively')">
+                <span class="score-label">灵动调</span>
+                <div class="score-bar-bg"><div class="score-bar-fill lively" id="livelyBar"></div></div>
+                <span class="score-value" id="livelyScore">0</span>
+            </div>
+            <div class="score-item" onclick="showPerfumeByType('rich')">
+                <span class="score-label">醇厚调</span>
+                <div class="score-bar-bg"><div class="score-bar-fill rich" id="richBar"></div></div>
+                <span class="score-value" id="richScore">0</span>
+            </div>
+            <div class="score-item" onclick="showPerfumeByType('light')">
+                <span class="score-label">淡雅调</span>
+                <div class="score-bar-bg"><div class="score-bar-fill light" id="lightBar"></div></div>
+                <span class="score-value" id="lightScore">0</span>
+            </div>
+            <div class="score-hint">点击上方任意类型查看对应香水推荐</div>
+        </div>
+
+        <button class="restart-btn" onclick="restartTest()">重新测试</button>
+    </div>
+
+    <script>
+        // 题目数据
+        const questions = [
+            {
+                question: "周末选电影，你更倾向看哪种？",
+                options: [
+                    "轻松治愈系：《你好李焕英》《夏洛特烦恼》",
+                    "科幻：《流浪地球2》《星际穿越》",
+                    "热血冒险片：《封神》《罗小黑》",
+                    "文艺慢节奏：《情书》《色戒》"
+                ]
+            },
+            {
+                question: "日常通勤/学习时，你常循环的音乐类型是？",
+                options: [
+                    "流行音乐：《晴天》《平凡之路》",
+                    "纯音乐/古典：《River Flows in You》《卡农》",
+                    "电子/Citypop：《Butter》《Ditto》",
+                    "Lo-fi/氛围音乐：雨声白噪音+慢节奏"
+                ]
+            },
+            {
+                question: "朋友约你周末聚会，你更倾向哪种形式？",
+                options: [
+                    "野餐/露营局：准备便当+拍照分享，氛围感满满",
+                    "剧本杀/密室局：沉浸式推理+团队协作，讲究逻辑和策略",
+                    "飞盘/运动局：户外撒欢+认识新朋友，热闹又出汗",
+                    "小范围饭局：老友3-4人+深度聊天，安静但有质量"
+                ]
+            },
+            {
+                question: "下班/放学后，你最常做的放松方式是？",
+                options: [
+                    "和朋友煲电话粥：聊聊今天的事，倾诉完心情变好",
+                    "独处复盘：整理待办+规划明天，掌控感让人安心",
+                    "运动/跳操：跟着帕梅拉动起来，出汗才解压",
+                    "喝茶/看书/发呆：安静待一会儿，什么都不用想"
+                ]
+            },
+            {
+                question: "规划旅行，你更倾向哪种方式？",
+                options: [
+                    "和好友结伴：一起做攻略+分享沿途心情",
+                    "独自深度游：按自己的节奏+不用迁就别人",
+                    "说走就走：不做攻略+随机探索，惊喜感更重要",
+                    "Citywalk慢游：逛小众街区+老城巷弄，不赶行程"
+                ]
+            },
+            {
+                question: "刷短视频/小红书时，你更爱看哪种内容？",
+                options: [
+                    "治愈生活片段：宠物vlog/手工DIY，看完心情变好",
+                    "知识科普/技能干货：AI教程/行业解读，涨知识有收获",
+                    "搞笑段子/热梗：脱口秀/整活视频，笑出腹肌",
+                    "慢生活/美学博主：插花、茶道、老物件，安静又养眼"
+                ]
+            },
+            {
+                question: "给重要的人准备礼物，你会选哪种？",
+                options: [
+                    "手写信+定制相册：花时间整理回忆，心意比价格重要",
+                    "实用型好物：查过测评+对方确实需要，精准不踩雷",
+                    "新奇体验券：密室/跳伞/演唱会门票，一起创造新回忆",
+                    "有年代感的物件：黑胶唱片/旧版书籍，独一无二有故事"
+                ]
+            },
+            {
+                question: "下午茶时间，你更想来一杯？",
+                options: [
+                    "鲜芋牛奶/草莓拿铁",
+                    "美式咖啡/冷萃",
+                    "气泡水/莫吉托",
+                    "热普洱/桂花乌龙"
+                ]
+            },
+            {
+                question: "如果可以选择，你更想成为哪种女性？",
+                options: [
+                    "《请回答1988》德善——善良笨拙但被很多人爱着，是朋友圈里的小太阳",
+                    "《我的解放日志》琦贞——清醒独立，知道自己要什么，按自己的节奏生活",
+                    "《爱情而已》梁友安——大大咧咧，敢闯敢拼，走到哪里都能交到朋友",
+                    "《去有风的地方》许红豆——温和从容，不争不抢，在慢生活里找到自己"
+                ]
+            },
+            {
+                question: "规划周末行程，你更倾向哪种安排？",
+                options: [
+                    "约人+分享：和朋友逛街/喝下午茶，聊天比逛更重要",
+                    "独立完成待办：整理房间/学技能，有成果才安心",
+                    "探索新地方：打卡没去过的店/活动，新鲜感第一",
+                    "窝着+放空：看书/追剧/睡觉，充电比社交重要"
+                ]
+            },
+            {
+                question: "选运动方式，你更偏爱哪种？",
+                options: [
+                    "双人/团体运动：羽毛球/飞盘，有人陪才有动力",
+                    "自律型运动：跑步/健身房，按计划执行有掌控感",
+                    "刺激型运动：滑板/攀岩/冲浪，挑战和新鲜感并存",
+                    "慢节奏运动：瑜伽/散步/太极，不急不赶地动一动"
+                ]
+            },
+            {
+                question: "当生活突然「被打乱」（如加班、航班取消），你的第一反应是？",
+                options: [
+                    "先安慰身边的人：「没事没事，总会有办法的」——自己慌但不想让别人担心",
+                    "立刻打开手机查备选方案——情绪可以之后再处理，先解决问题",
+                    "「反正计划赶不上变化」——干脆放弃原计划，看看有没有新玩法",
+                    "内心叹口气，沉默消化——急也没用，慢慢接受吧"
+                ]
+            },
+            {
+                question: "你误入一家「记忆咖啡馆」，菜单上写着「点一杯，重温一段时光」，你会点？",
+                options: [
+                    "「生日派对的下午」",
+                    "「凌晨四点的图书馆」",
+                    "「毕业旅行的大巴」",
+                    "「老宅的午后」"
+                ]
+            },
+            {
+                question: "如果你的性格是一种「房间光线」，走进去会看到？",
+                options: [
+                    "暖黄落地灯+纱帘透光",
+                    "冷白自然光+百叶窗",
+                    "彩色霓虹灯+满墙海报",
+                    "烛光+老台灯"
+                ]
+            },
+            {
+                question: "深夜失眠，你推开一扇「解忧小屋」的门，里面的布置是？",
+                options: [
+                    "毛绒地毯+趴着的猫+角落放着热可可",
+                    "极简书桌+冷白台灯+落地窗外是城市夜景",
+                    "吊床+满墙的旅行照片+音响在放海浪声",
+                    "老式壁炉+皮沙发+一整墙的黑胶唱片"
+                ]
+            },
+            {
+                question: "有人送你一把「能打开任意一扇门」的钥匙，它的材质是？",
+                options: [
+                    "玫瑰金的，顶端嵌着一颗心形小珍珠",
+                    "银色金属的，线条利落，像精密仪器的零件",
+                    "彩色玻璃拼成的，阳光下会折射出彩虹",
+                    "旧铜色的，上面刻着看不懂的古老花纹"
+                ]
+            },
+            {
+                question: "如果你的情绪会变成「天气」，你最常出现的天气是？",
+                options: [
+                    "春日阵雨后——刚刚湿了眼眶但很快放晴",
+                    "深秋的晴天——凉爽、清醒、天空很高很远",
+                    "夏天午后的雷阵雨——来得快去得快，雨后有彩虹",
+                    "冬天清晨的薄雾——安静、慢热、轮廓柔和"
+                ]
+            },
+            {
+                question: "在一个「什么都能典当」的店里，你愿意用什么换一段「被治愈的时光」？",
+                options: [
+                    "一段不再联系的友谊",
+                    "三个月的周末",
+                    "一个无聊的习惯",
+                    "一件旧物的记忆"
+                ]
+            },
+            {
+                question: "如果你是一本书，翻开你的人会最先注意到？",
+                options: [
+                    "书页间夹着的干花和手写便签",
+                    "密密麻麻的批注和整齐的下划线",
+                    "封面磨损严重——因为被太多人翻过传阅",
+                    "书脊完好——因为主人总是小心翼翼保护"
+                ]
+            },
+            {
+                question: "你变成一家深夜小店，会是什么店？",
+                options: [
+                    "24小时营业的甜品店",
+                    "无人自助便利店",
+                    "街角的唱片酒吧",
+                    "巷子里的旧书店"
+                ]
+            },
+            {
+                question: "如果你的笑声有颜色，它是？",
+                options: [
+                    "鹅黄色——像布丁摇晃的样子，软软的",
+                    "浅灰蓝——像起雾的湖面泛起涟漪，淡淡的",
+                    "橙红色——像篝火炸开的火星，噼啪响",
+                    "米白色——像旧照片泛黄的边缘，慢慢晕开"
+                ]
+            },
+            {
+                question: "如果人生是一趟旅程，你觉得它更像？",
+                options: [
+                    "一列缓慢行驶的绿皮火车",
+                    "一场精心规划的自驾游",
+                    "一次没有地图的背包旅行",
+                    "一条蜿蜒的山间小路"
+                ]
+            },
+            {
+                question: "如果「理想」是一颗种子，你会怎么对待它？",
+                options: [
+                    "种在窗台的花盆里，每天浇水晒太阳，期待它发芽开花",
+                    "先研究土壤和光照条件，制定种植计划，确保它高效生长",
+                    "随手撒在风里，让它自己选择落在哪里——能生根最好，不能也没关系",
+                    "埋在院子的角落，不刻意照料，相信该发芽时它自己会破土"
+                ]
+            },
+            {
+                question: "如果「爱情」有形状，你觉得它更像？",
+                options: [
+                    "两棵树的根在地下悄悄缠绕——地面上看不见，但早就连在一起了",
+                    "两条平行线在某个维度相交——各自延伸，但有清晰的交汇点",
+                    "两团火焰靠在一起——热烈、明亮、形状一直在变化",
+                    "两块石头在溪水中并排——不说话，但经得起水流和时间"
+                ]
+            },
+            {
+                question: "如果生命是一本书，你觉得「最后一页」应该写什么？",
+                options: [
+                    "一句温柔的告别",
+                    "一份清晰的总结",
+                    "一个省略号",
+                    "什么都不写，留一张空白页"
+                ]
+            }
+        ];
+
+        // 结果数据
+        const results = {
+            sweet: {
+                name: "甜润调",
+                scent: "像蜂蜜、蜜桃，柔和绵长",
+                traits: "你天生带着温暖的磁场，善于共情，总能敏锐地察觉他人的情绪。你重视情感联结，愿意为在乎的人付出时间和心意。在你身边，人们会不自觉地卸下防备。",
+                desc: "你的气息像阳光下的蜜桃，甜而不腻，带着恰到好处的温度。初见时让人觉得亲切，相处久了更觉得舒服。你不是锋芒毕露的类型，却有种让人想要靠近的柔软力量。",
+                charm: "你的魅力在于真诚。不需要刻意表演，你的善意和温柔就是最好的吸引力。在这个有点冷的世界里，你是难得的暖意。",
+                perfumes: [
+                    { brand: "Dior", name: "迪奥小姐花漾淡香水", note: "花果香调，温柔甜美又不腻人" },
+                    { brand: "YSL", name: "自由之水 LIBRE", note: "黑加仑与香草交织，温柔中带着力量" },
+                    { brand: "Jo Malone", name: "蓝风铃 Bluebell", note: "甜蜜娇弱的花香，像露珠点缀的清晨" },
+                    { brand: "CHANEL", name: "邂逅柔情 Chance Eau Tendre", note: "粉色柔情，花果香调经典之作" }
+                ]
+            },
+            cool: {
+                name: "清冽调",
+                scent: "像薄荷、冷杉，干净通透",
+                traits: "你理性独立，有清晰的目标和高效的执行力。你不喜欢拖泥带水，习惯用逻辑解决问题。独处对你来说是充电，而非逃避。",
+                desc: "你的气息像山间的冷泉，清澈见底，自带一种让人信服的距离感。你不会轻易表露情绪，但你的可靠和专业让人安心。",
+                charm: "你的魅力在于清醒。在众人迷茫时你永远知道方向，这种稳定感让人忍不住想要追随。你的冷静不是冷漠，而是一种值得信赖的力量。",
+                perfumes: [
+                    { brand: "Byredo", name: "纯真年代 Blanche", note: "干净的皂香与白玫瑰，刚洗完澡的清透感" },
+                    { brand: "Aesop", name: "悟香水 Tacit", note: "香柠檬与岩兰草，清冷又温暖的阳光气息" },
+                    { brand: "Le Labo", name: "柠檬22 Bergamote 22", note: "香柠檬与雪松，清新高级的都市感" },
+                    { brand: "Hermes", name: "大地 Terre d Hermes", note: "矿物与木质调，干净利落不拖泥带水" }
+                ]
+            },
+            lively: {
+                name: "灵动调",
+                scent: "像柑橘、气泡水，清爽灵动",
+                traits: "你天生外向，热爱新鲜事物，走到哪里都能成为气氛担当。你不喜欢一成不变，冒险和挑战让你兴奋。你的热情很有感染力。",
+                desc: "你的气息像刚剥开的橘子，清新又明亮，带着让人精神一振的活力。和你在一起，连空气都变得轻快起来。",
+                charm: "你的魅力在于生命力。你像一团跳跃的火苗，让周围的人都被点燃。你的快乐是真实的，你的热情是有感染力的，这就是你最大的吸引力。",
+                perfumes: [
+                    { brand: "Jo Malone", name: "英国梨与小苍兰", note: "清甜果香，活泼又灵动" },
+                    { brand: "Diptyque", name: "希腊无花果 Philosykos", note: "绿意盎然的无花果香，充满生命力" },
+                    { brand: "Acqua di Parma", name: "蓝色地中海系列", note: "柑橘与海洋气息，地中海的阳光假日" },
+                    { brand: "Byredo", name: "莫哈维之影 Mojave Ghost", note: "果香花香交织，高雅又充满活力" }
+                ]
+            },
+            rich: {
+                name: "醇厚调",
+                scent: "像木质、岩茶，厚重温润",
+                traits: "你沉稳内敛，不爱张扬但很有分量。你做事靠谱，说到做到，是朋友眼中的「定海神针」。你偏好深度而非广度，无论是关系还是兴趣。",
+                desc: "你的气息像陈年的普洱，初尝可能觉得平淡，细品才知道层次丰富。你不是一见钟情的类型，却是日久生情的最佳人选。",
+                charm: "你的魅力在于厚度。在这个浮躁的时代，你的沉稳和可靠显得尤为珍贵。你给人的安全感，是无法被复制的。",
+                perfumes: [
+                    { brand: "Le Labo", name: "檀香33 Santal 33", note: "经典木质香，温暖沉稳极具辨识度" },
+                    { brand: "Penhaligons", name: "兽首系列 狐狸", note: "木质玫瑰调，中和沉稳与柔美" },
+                    { brand: "观夏", name: "昆仑煮雪", note: "东方木质调，沉静内敛的东方美学" },
+                    { brand: "Tom Ford", name: "乌木沉香 Oud Wood", note: "深邃木质皮革，成熟稳重的质感" }
+                ]
+            },
+            light: {
+                name: "淡雅调",
+                scent: "像白茶、草木，清淡雅致",
+                traits: "你敏感细腻，喜欢安静的环境和深度的独处。你不追求热闹，更享受和自己相处。你的内心世界很丰富，只是不轻易展示给外人。",
+                desc: "你的气息像雨后的草木，清淡却让人印象深刻。你不张扬不刻意，却有种让人想要靠近细看的气质。",
+                charm: "你的魅力在于留白。你不会把自己摊开给所有人看，这种若即若离的神秘感，反而让人更想了解你。你的安静，是一种高级的吸引力。",
+                perfumes: [
+                    { brand: "观夏", name: "梅水煎茶", note: "东方茶香，清淡雅致的中式意境" },
+                    { brand: "Bvlgari", name: "白茶 Eau Parfumee au The Blanc", note: "白茶与麝香，不张扬却耐人寻味" },
+                    { brand: "Diptyque", name: "杜桑晚香玉 Do Son", note: "温柔含蓄的花香，像海边傍晚的微风" },
+                    { brand: "Le Labo", name: "愈创木10 Gaiac 10", note: "禅意木质调，温和治愈的文艺气质" }
+                ]
+            }
+        };
+
+        // 状态变量
+        let currentQuestion = 0;
+        let answers = new Array(25).fill(null);
+        let scores = { sweet: 0, cool: 0, lively: 0, rich: 0, light: 0 };
+
+        // 分值映射
+        const scoreMap = {
+            0: { sweet: 2, cool: 0, lively: 0, rich: 0, light: 1 },  // A
+            1: { sweet: 0, cool: 2, lively: 0, rich: 1, light: 0 },  // B
+            2: { sweet: 0, cool: 0, lively: 2, rich: 0, light: 1 },  // C
+            3: { sweet: 0, cool: 0, lively: 0, rich: 2, light: 1 }   // D
+        };
+
+        function startTest() {
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('testPage').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            const q = questions[index];
+            document.getElementById('questionNumber').textContent = `QUESTION ${String(index + 1).padStart(2, '0')}`;
+            document.getElementById('questionText').textContent = q.question;
+            
+            const optionsHtml = q.options.map((opt, i) => {
+                const labels = ['A', 'B', 'C', 'D'];
+                const selected = answers[index] === i ? 'selected' : '';
+                return `<div class="option ${selected}" onclick="selectOption(${i})">
+                    <span class="option-label">${labels[i]}.</span>${opt}
+                </div>`;
+            }).join('');
+            
+            document.getElementById('optionsContainer').innerHTML = optionsHtml;
+            
+            // 更新进度
+            const progress = ((index + 1) / 25) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressLabel').textContent = `问题 ${index + 1} / 25`;
+            document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+            
+            // 更新按钮状态
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = answers[index] === null;
+            document.getElementById('nextBtn').textContent = index === 24 ? '查看结果' : '下一题';
+            
+            // 动画
+            document.getElementById('questionContainer').style.animation = 'none';
+            setTimeout(() => {
+                document.getElementById('questionContainer').style.animation = 'slideIn 0.5s ease-out';
+            }, 10);
+        }
+
+        function selectOption(optionIndex) {
+            answers[currentQuestion] = optionIndex;
+            
+            // 更新选中状态
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === optionIndex);
+            });
+            
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < 24) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResult();
+            }
+        }
+
+        function calculateScores() {
+            scores = { sweet: 0, cool: 0, lively: 0, rich: 0, light: 0 };
+            
+            answers.forEach(answer => {
+                if (answer !== null) {
+                    const mapping = scoreMap[answer];
+                    scores.sweet += mapping.sweet;
+                    scores.cool += mapping.cool;
+                    scores.lively += mapping.lively;
+                    scores.rich += mapping.rich;
+                    scores.light += mapping.light;
+                }
+            });
+            
+            return scores;
+        }
+
+        function getMainType() {
+            calculateScores();
+            
+            const types = ['sweet', 'cool', 'lively', 'rich', 'light'];
+            let maxScore = 0;
+            let mainType = 'sweet';
+            
+            types.forEach(type => {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    mainType = type;
+                }
+            });
+            
+            return mainType;
+        }
+
+        function showResult() {
+            document.getElementById('testPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'block';
+            
+            const mainType = getMainType();
+            const result = results[mainType];
+            
+            document.getElementById('resultType').textContent = result.name;
+            document.getElementById('resultType').className = `result-type ${mainType}`;
+            document.getElementById('resultScent').textContent = result.scent;
+            document.getElementById('resultTraits').textContent = result.traits;
+            document.getElementById('resultDesc').textContent = result.desc;
+            document.getElementById('resultCharm').textContent = result.charm;
+            
+            // 显示香水推荐标题
+            document.getElementById('perfumeTitle').textContent = result.name + ' 推荐香水';
+            
+            // 显示香水推荐
+            const perfumeListHtml = result.perfumes.map(p => `
+                <div class="perfume-item">
+                    <div class="perfume-icon">✦</div>
+                    <div class="perfume-info">
+                        <div class="perfume-brand">${p.brand}</div>
+                        <div class="perfume-name">${p.name}</div>
+                        <div class="perfume-note">${p.note}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('perfumeList').innerHTML = perfumeListHtml;
+            
+            // 显示分数条并标记主调
+            const maxPossible = 50;
+            const typeIndex = { sweet: 0, cool: 1, lively: 2, rich: 3, light: 4 };
+            setTimeout(() => {
+                document.getElementById('sweetBar').style.width = `${(scores.sweet / maxPossible) * 100}%`;
+                document.getElementById('coolBar').style.width = `${(scores.cool / maxPossible) * 100}%`;
+                document.getElementById('livelyBar').style.width = `${(scores.lively / maxPossible) * 100}%`;
+                document.getElementById('richBar').style.width = `${(scores.rich / maxPossible) * 100}%`;
+                document.getElementById('lightBar').style.width = `${(scores.light / maxPossible) * 100}%`;
+                
+                document.getElementById('sweetScore').textContent = scores.sweet;
+                document.getElementById('coolScore').textContent = scores.cool;
+                document.getElementById('livelyScore').textContent = scores.lively;
+                document.getElementById('richScore').textContent = scores.rich;
+                document.getElementById('lightScore').textContent = scores.light;
+                
+                // 给主调添加active状态
+                const scoreItems = document.querySelectorAll('.score-item');
+                scoreItems[typeIndex[mainType]].classList.add('active');
+            }, 300);
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            answers = new Array(25).fill(null);
+            scores = { sweet: 0, cool: 0, lively: 0, rich: 0, light: 0 };
+            
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('startPage').style.display = 'flex';
+        }
+
+        function showPerfumeByType(type) {
+            const result = results[type];
+            
+            // 更新香水推荐标题
+            const titleMap = {
+                sweet: '甜润调',
+                cool: '清冽调',
+                lively: '灵动调',
+                rich: '醇厚调',
+                light: '淡雅调'
+            };
+            document.getElementById('perfumeTitle').textContent = titleMap[type] + ' 推荐香水';
+            
+            // 更新香水列表
+            const perfumeListHtml = result.perfumes.map(p => `
+                <div class="perfume-item">
+                    <div class="perfume-icon">✦</div>
+                    <div class="perfume-info">
+                        <div class="perfume-brand">${p.brand}</div>
+                        <div class="perfume-name">${p.name}</div>
+                        <div class="perfume-note">${p.note}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('perfumeList').innerHTML = perfumeListHtml;
+            
+            // 更新选中状态
+            document.querySelectorAll('.score-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // 滚动到香水推荐区域
+            document.querySelector('.perfume-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
